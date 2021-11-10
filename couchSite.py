@@ -62,9 +62,9 @@ class CouchUploader():
                 self.db.put_attachment(documentJSON, fp, relPath)
                 fp.close()
 
-            except Exception, e:
+            except Exception as e:
                 print ("Couldn't attach file %s" % fileNamePath)
-                print str(e)
+                print (str(e))
                 traceback.print_exc()
                 continue
 
@@ -79,7 +79,7 @@ class CouchUploader():
     pattern = os.path.join(directory,'*.py')
     viewFiles = glob.glob(pattern)
     for viewFile in viewFiles:
-        execfile(viewFile)
+        exec(open(viewFile).read())
         for view in views:
             viewID = os.path.join('_design',view)
             print ("uploading ", view, " of ", viewFile, " to ", self.databaseName)
@@ -125,9 +125,9 @@ if __name__ == '__main__':
         if len(sys.argv) < 2:
             raise BaseException('missing arguments')
         main()
-    except Exception, e:
+    except Exception as e:
         print ('ERROR, UNEXPECTED EXCEPTION')
-        print str(e)
+        print (str(e))
         traceback.print_exc()
 
 # }}}
